@@ -60,7 +60,7 @@ app.post('/flights', (req, res) => {
   const { flightNumber, origin, destination, departureTime, arrivalTime, price } = req.body;
   
   // Basic validation
-  if (!flightNumber || !origin || !destination || !departureTime || !arrivalTime || !price) {
+  if (!flightNumber || !origin || !destination || !departureTime || !arrivalTime || price === undefined || price === null) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
   
@@ -97,7 +97,7 @@ app.put('/flights/:id', (req, res) => {
     ...(destination && { destination }),
     ...(departureTime && { departureTime }),
     ...(arrivalTime && { arrivalTime }),
-    ...(price && { price })
+    ...(price !== undefined && price !== null && { price })
   };
   
   flights[flightIndex] = updatedFlight;
